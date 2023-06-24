@@ -1,0 +1,92 @@
+ OPERATING SYSTEM STRUCTURE
+Every operating system has its own internal structure in terms of file arrangement, memory management, storage management, etc., and the entire performance of the system depends on its structure. The internal structure of operating system provides an idea of how the components of the operating system are interconnected and blended into kernel. 
+This section discusses various system structures that have evolved with time.
+Some approaches of Operating System are:
+1. Simple Structure
+2. Monolithic Systems 
+3. Layered Systems 
+4. Microkernels 
+5. Client-Server Model 
+6. Virtual Machines 
+7. Exokernels 
+
+1. Simple Structure: 
+OS started as small, simple, and limited systems and then grew beyond their original scope. MS- DOS is an example of such a system. Early operating systems were developed with an elementary approach without much concern about the structure. In this approach, the structure of the operating systems was not well-defined. The operating systems were monolithic, written as a collection of procedures where each procedure is free to call any other procedure. An example of operating systems designed with this approach is MS-DOS. Initially, MS-DOS was designed as a small-size and simple system, and with limited scope, but grew beyond its scope with time. It was designed with the idea of providing more functionality within less space; therefore, it was not carefully divided into modules. Figure shows the structure of the MS-DOS system. 
+
+Fig 12.2 MS-DOS Structure
+
+Though MS-DOS has a limited structuring, there is no clear separation between the different interfaces and level of functionality. For example, application programs can directly call the basic I/O routines to read/write data on disk instead of going through a series of interfaces. This exemption makes the MS-DOS system susceptible to malicious programs that may lead to system crash. Moreover, due to the lack of hardware protection and dual-mode operation in the Intel 8088 system (for which MS-DOS system was developed), the base hardware was directly accessible to the application programs.
+
+
+2. Monolithic System 
+In the monolithic approach the entire operating system runs as a single program in kernel mode. The operating system is written as a collection of procedures, linked together into a single large executable program. Each procedure in the system is free to call any other process. Being able to call any procedure makes the system very efficient. No information hiding every procedure is visible to every other procedure. Eg MS DOS and LINUX.
+
+This organization suggests a basic structure for the operating system:
+• Main Function- invokes requested service procedure
+• Service Procedures- carry out system calls
+• Utility functions- Help service procedures to perform certain tasks
+
+Disadvantage:
+1. Difficult and complicated structure.
+2. A crash in any of these procedures will take down the entire operating system
+
+Fig. 12.3 Simple Structuring model for a monolithic system
+
+
+3. Layered Structure
+In the layered approach, the operating system is organized as a hierarchy of layers with each layer built on the top of the layer below it. The topmost layer is the user interface, while the bottommost layer is the hardware. 
+Each layer has a well defined function and comprises data structures and a set of routines. The layers are constructed in such a manner that a typical layer (say, layer n) is able to invoke operations on its lower layers and the operations of layer n can be invoked by its higher layers.
+The same concept of layered approach was also implemented by MULTICS with concentric rings. The procedures in out rings are supposed to make a system call to access the process in the inner ring.The diagram reflects the structure of the operating system with following details
+
+Fig. 12.4 Structure of the THE Operating System
+
+Layer 0 dealt with allocation of the processor, switching between processes when interrupts occurred or timers expired. 
+Layer 1 did the memory management. It allocated space for processes in main memory
+Layer 2 handled communication between each process and the operator console
+Layer 3 took care of managing the I/O devices and buffering the information streams
+Layer 4 was where the user programs were found.
+Layer 5 the system operator process was located.
+TRAP instruction whose parameters were carefully checked for validity before the call was allowed to proceed.
+
+4. Microkernels
+In the mid-1980s, researchers at Carnegie Mellon University developed an operating system called Mach that modularized the kernel using the microkernel approach. This method structures the operating system by removing all nonessential components from the kernel and implementing them as system and user-level programs. The result is a smaller kernel.
+Microkernel structure focuses on making the kernel smaller by reducing the non essential components from the kernel. These non essential components are placed in user space. The basic idea behind the microkernel design is to achieve high reliability by splitting the operating system up into small, well-defined modules. The microkernel—runs in kernel mode. The main function of microkernel is to provide a communication facility between the client program and various services that are also running in user space. All new services are added to the user space and the kernel doesn’t need to be modified.
+Microkernel provides high security and reliability as most of the services are running in user space, if a service fails the rest operating system remains untouched 
+
+Disadvantage: Performance decrease due to increased system function 
+overhead.
+
+Fig. 12.5 Microkernel structure
+
+
+5. Modular structure or approach:
+It is considered as the best approach for an OS. It involves designing of a modular kernel. The kernel has only set of core components and other services are added as dynamically loadable modules to the kernel either during run time or boot time. It resembles layered structure due to the fact that each kernel has defined and protected interfaces but it is more flexible than the layered structure as a module can call any other module.For example Solaris OS is organized as shown in the figure.
+
+Fig. 12.6 Modular structure
+
+
+6. Client Server System
+The servers, each of which provides some service, and the clients, which use these services. This model is known as the client-server model. Since clients communicate with servers by sending messages, the clients need not know whether the messages are handled locally on their own machines, or whether they are sent across a network to servers on a remote machine. As far as the client is concerned: requests are sent and replies come back. Thus the client-server model is an abstraction that can be used for a single machine or for a network of machines.
+
+Fig. 12.7 Client Server System
+
+
+7. Virtual Machines
+Virtual machine is nothing but the identical copy of the bare hardware including CPU, disks, I/O devices, interrupts, etc. It allows each user to run operating system or software packages of his choice on a single machine thereby creating an illusion that each user has its own machine.
+The virtual machine operating system (VMOS) creates several virtual machines by partitioning the resources of the real machine. The operating system uses the CPU scheduling and virtual memory concept to create an appearance that each running process has its own processor as well own virtual memory (see Figure 1.14). The spooling and file system are used to create illusion of each user having own card reader and line printer.
+
+Fig. 12.8 Virtual Machine Structure
+
+The virtual memory approach provides the following benefits: Using virtual machines does not result in an extra overhead and performance degradation as each virtual machine has same architecture as that of a real machine. 
+
+Generally, while developing the operating system, the normal functioningof the current system is to be halted. However, by using the virtual machine system, each system programmer can be provided with his own virtual machine for system development. Thus, there is no need to interrupt the normal system operation. The VMOS keeps the virtual machines isolated from one another. This results in the protection of system resources.
+
+
+8. Exokernel 
+Exokernel runs in the bottom layer of kernel mode. Its job is to allocate resources to virtual machines and then check attempts to use them to make sure no machine is trying to use somebody else’s resources. 
+
+Rather than cloning the actual machine, as is done with virtual machines, another strategy is partitioning it, giving each user a subset of the resources. At the bottom layer, running in kernel mode, is a program called the exokernel. Its job is to allocate resources to virtual machines and then check attempts to use them to make sure no machine is trying to use somebody else’s resources. Example: VM/360
+
+The advantage of the Exo-kernel scheme is that it saves a layer of mapping. In the other designs, each virtual machine thinks it has its own disk, with blocks running from 0 to some maximum, so the virtual machine monitor must maintain tables to remap disk addresses (and all other resources).With the exokernel, this remapping is not needed.
+
+Fig. 12.9 Exokernel Structure
